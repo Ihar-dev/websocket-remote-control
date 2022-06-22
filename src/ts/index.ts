@@ -1,6 +1,6 @@
-// import Jimp from 'jimp';
-import {httpServer} from './src/http_server/index.js';
-// import robot from 'robotjs';
+import Jimp from 'jimp';
+import {httpServer} from './http_server/server';
+import robot from 'robotjs';
 // import { WebSocketServer } from 'ws';
 
 const HTTP_PORT = 3000;
