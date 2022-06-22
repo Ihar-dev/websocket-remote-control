@@ -1,6 +1,8 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
+const nodeExternals = require('webpack-node-externals');
+
 module.exports = {
   mode: 'production',
   target: 'node',
@@ -18,6 +20,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.ts'],
   },
+  externals: [nodeExternals()],
   module: {
     rules: [{
         test: /\.css$/i,
