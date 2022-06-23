@@ -8,7 +8,8 @@ import {
   mouseRight,
   drawCircle,
   drawRectangle,
-  drawSquare
+  drawSquare,
+  printScreen,
 } from '../controllers/robot-controllers';
 
 import OptionsType from '../models/options.model';
@@ -23,7 +24,7 @@ export const connection = (): void => {
   
     const duplex = WebSocket.createWebSocketStream(ws, { decodeStrings: false });
   
-    duplex.on('data', (data: Buffer): void => {
+    duplex.on('data', async (data: Buffer): Promise < void > => {
 
       console.log(`Client has sent us: ${data}`);
 
@@ -60,6 +61,10 @@ export const connection = (): void => {
         break;
         case 'draw_square':
           drawSquare(mouse, options);
+        break;
+        case 'prnt_scrn':
+          const base64 = await printScreen(mouse);
+          command += ` ${base64.slice(22)}`;
         break;
         default:
       }

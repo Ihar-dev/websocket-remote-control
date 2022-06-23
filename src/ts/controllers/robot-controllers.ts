@@ -51,3 +51,18 @@ export const drawSquare = (mouse: MouseType, options: string | OptionsType | nul
   robot.moveMouseSmooth(mouse.x, mouse.y);
   robot.mouseToggle("up");
 }
+
+export const printScreen = async (mouse: MouseType): Promise < string > => {
+  const size = 200;
+  const leftX = mouse.x - size / 2;
+  const leftY = mouse.y - size / 2;
+  
+  const bitMap = robot.screen.capture(leftX, leftY, size, size);
+
+  const img = new Jimp(size, size);
+  img.bitmap.data = bitMap.image;
+
+  const base64 = await img.getBase64Async(Jimp.MIME_PNG);
+
+  return base64;
+}
