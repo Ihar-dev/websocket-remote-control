@@ -1,6 +1,6 @@
 import { httpServer } from './http_server/server';
 
-import { connection } from './websocket_connection/websocket';
+import { connection } from './websocket_server/server';
 
 const HTTP_PORT = 3000;
 
