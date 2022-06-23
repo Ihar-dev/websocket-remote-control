@@ -1,7 +1,16 @@
 import robot from 'robotjs';
 import WebSocket, { WebSocketServer } from 'ws';
 
-import { mouseUp, mouseDown, mouseLeft, mouseRight, drawCircle } from '../controllers/robot-controllers';
+import {
+  mouseUp,
+  mouseDown,
+  mouseLeft,
+  mouseRight,
+  drawCircle,
+  drawRectangle
+} from '../controllers/robot-controllers';
+
+import OptionsType from '../models/options.model';
 
 export const connection = (): void => {
   const wss = new WebSocketServer({
@@ -21,8 +30,10 @@ export const connection = (): void => {
       const mouse = robot.getMousePos();
       const textDataArr = textData.split(' ');
       let command = textDataArr[0];
-      let options: string | null;
-      (textDataArr.length > 1) ? options = textDataArr[1] : options = null;
+      let options: string| OptionsType | null;
+      if (textDataArr.length > 2) options = { x: textDataArr[1], y: textDataArr[2] };
+      else if (textDataArr.length > 1) options = textDataArr[1];
+      else options = null;
       
       switch (command) {
         case 'mouse_up':
@@ -42,6 +53,9 @@ export const connection = (): void => {
         break;
         case 'draw_circle':
           drawCircle(mouse, options);
+        break;
+        case 'draw_rectangle':
+          drawRectangle(mouse, options);
         break;
         default:
       }
