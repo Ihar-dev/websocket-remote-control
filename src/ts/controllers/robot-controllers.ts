@@ -54,9 +54,18 @@ export const drawSquare = (mouse: MouseType, options: string | OptionsType | nul
 
 export const printScreen = async (mouse: MouseType): Promise < string > => {
   const size = 200;
-  const leftX = mouse.x - size / 2;
-  const leftY = mouse.y - size / 2;
+  const halfSize = size / 2;
+  const screenSize = robot.getScreenSize();
+
+  let leftX: number;
+  let leftY: number;
+
+  if (mouse.x + halfSize > screenSize.width) leftX = screenSize.width - size;
+  else (mouse.x < halfSize) ? leftX = 0 : leftX = mouse.x - halfSize;
   
+  if (mouse.y + halfSize > screenSize.height) leftY = screenSize.height - size;
+  else (mouse.y < halfSize) ? leftY = 0 : leftY = mouse.y - halfSize;
+
   const bitMap = robot.screen.capture(leftX, leftY, size, size);
 
   const img = new Jimp(size, size);
