@@ -42,3 +42,12 @@ export const drawRectangle = (mouse: MouseType, options: string | OptionsType | 
     robot.mouseToggle("up");
   }
 }
+
+export const drawSquare = (mouse: MouseType, options: string | OptionsType | null): void => {
+  robot.mouseToggle("down");
+  robot.moveMouseSmooth(mouse.x + Number(options), mouse.y);
+  robot.moveMouseSmooth(mouse.x + Number(options), mouse.y + Number(options));
+  robot.moveMouseSmooth(mouse.x, mouse.y + Number(options));
+  robot.moveMouseSmooth(mouse.x, mouse.y);
+  robot.mouseToggle("up");
+}

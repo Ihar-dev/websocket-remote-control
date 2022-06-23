@@ -7,7 +7,8 @@ import {
   mouseLeft,
   mouseRight,
   drawCircle,
-  drawRectangle
+  drawRectangle,
+  drawSquare
 } from '../controllers/robot-controllers';
 
 import OptionsType from '../models/options.model';
@@ -56,6 +57,9 @@ export const connection = (): void => {
         break;
         case 'draw_rectangle':
           drawRectangle(mouse, options);
+        break;
+        case 'draw_square':
+          drawSquare(mouse, options);
         break;
         default:
       }
