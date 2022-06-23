@@ -1,7 +1,7 @@
 import Jimp from 'jimp';
 import {httpServer} from './http_server/server';
 import robot from 'robotjs';
-import { WebSocketServer } from 'ws';
+import WebSocket, { WebSocketServer } from 'ws';
 
 const HTTP_PORT = 3000;
 
@@ -12,9 +12,12 @@ const wss = new WebSocketServer({
   port: 8080,
 });
 
-wss.on('connection', ws => {
+wss.on('connection', async ws => {
   console.log('New client connected');
-  ws.on('message', data => {
+
+  const duplex = WebSocket.createWebSocketStream(ws, { decodeStrings: false });
+
+  duplex.on('data', (data: Buffer): void => {
     console.log(`Client has sent us: ${data}`);
     const textData = data.toString();
     const mouse = robot.getMousePos();
@@ -35,10 +38,10 @@ wss.on('connection', ws => {
       break;
       default:
     }
-    ws.send(command);
+    duplex.write(command);
   });
 
-   ws.on('close', () => {
+  ws.on('close', () => {
     console.log('Client has disconnected')
   });
 });

@@ -1,6 +1,5 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { fileURLToPath } from 'url';
 import * as http from 'http';
 import { IncomingMessage, ServerResponse } from 'http';
 
