@@ -41,6 +41,19 @@ wss.on('connection', async ws => {
       case 'mouse_position':
         command += ` ${mouse.x},${mouse.y}`;
       break;
+      case 'draw_circle':
+        robot.mouseToggle("down");
+        const fullCircle = 2 * Math.PI;
+        const steps = 500;
+        const fiAddition = fullCircle / steps;
+        const radius = Number(options);
+        for (let fi = -Math.PI; fi <= Math.PI; fi += fiAddition) {
+          const x = Math.round(radius * Math.cos(fi));
+          const y = Math.round(radius * Math.sin(fi));
+          robot.moveMouse(mouse.x + x + radius, mouse.y + y);
+        }
+        robot.mouseToggle("up");
+      break;
       default:
     }
     duplex.write(command);
