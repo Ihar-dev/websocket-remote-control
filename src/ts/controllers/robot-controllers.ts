@@ -70,6 +70,14 @@ export const printScreen = async (mouse: MouseType): Promise < string > => {
 
   const img = new Jimp(size, size);
   img.bitmap.data = bitMap.image;
+  
+  //fix colors inversion
+  img.scan(0, 0, img.bitmap.width, img.bitmap.height, (x, y, idx) => {
+    const red = img.bitmap.data[ idx + 0 ];
+    const blue = img.bitmap.data[ idx + 2 ];
+    img.bitmap.data[ idx + 0 ] = blue;
+    img.bitmap.data[ idx + 2 ] = red;
+  });
 
   const base64 = await img.getBase64Async(Jimp.MIME_PNG);
 
